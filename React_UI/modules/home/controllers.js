@@ -26,7 +26,7 @@ angular.module('Home')
 
     	$http.get('http://localhost:3000/api/v1/inventories')
                .success(function (response) {
-                   $scope.approvedinv = response.approvedinventories;
+                   $scope.inv = response.inventories;
                    $scope.loading = false;
                });
         
@@ -42,12 +42,6 @@ angular.module('Home')
         $scope.dashboardtransition = Helpers.dashboardtransition;
 
 		$scope.delete = function (id) {
-			if($rootScope.globals.currentUser.manager == true)	{
-				$scope.status = 'Approved';
-			}
-			else {
-				$scope.status = 'Pending';
-			}
 			$http.delete('http://localhost:3000/api/v1/inventories/' + id
 			).success(function (response) {
                    if(response.success) {
@@ -55,8 +49,7 @@ angular.module('Home')
 	                    $scope.dataLoading = true;
 	                    $http.get('http://localhost:3000/api/v1/inventories')
 		               .success(function (response) {
-		                   $scope.approvedinv = response.approvedinventories;
-		                   $scope.pendinginv = response.pendinginventories;
+		                   $scope.inv = response.inventories;
 		               });
 	                } else {
 	                    $scope.error = response.message;
@@ -78,23 +71,11 @@ angular.module('Home')
 
 		$scope.add = function () {
 			$scope.dataLoading = true;
-			if($rootScope.globals.currentUser.manager == true)	{
-				$scope.status = 'Approved';
-			}
-			else {
-				$scope.status = 'Pending';
-			}
 			$http.post('http://localhost:3000/api/v1/inventories',
 			{
 				productid: $scope.productid,
 				productname: $scope.productname,
 				vendor: $scope.Vendor,
-				mrp: $scope.MRP,
-				batchnum: $scope.BatchNum,
-				batchdate: $scope.BatchDate,
-				quantity: $scope.Quantity,
-				status: $scope.status,
-				modifiedby: $rootScope.globals.currentUser.username,
 				lastoperation: 'Add',
 			}).success(function (response) {
                    if(response.success) {
