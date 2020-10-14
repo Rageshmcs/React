@@ -2,10 +2,9 @@ module Api
 	module V1
 		class InventoriesController < ApplicationController
 			def index
-				# approvedinventories = Inventory.where("status like 'Approved' and lastoperation not like 'Delete'")
 				inventories = Inventory.all
 
-				render json: {approvedinventories: inventories}
+				render json: {inventories: inventories}
 			end
 
 			def create
