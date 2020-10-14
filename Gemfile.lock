@@ -198,6 +198,7 @@ DEPENDENCIES
   rack-cors
   rails (~> 5.1.6, >= 5.1.6.1)
   rails_admin
+  sprockets (~> 3.0)
   tzinfo-data
 
 BUNDLED WITH
